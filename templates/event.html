@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Event · #{{ event_id }}{% endblock %}
+{% block content %}
+<div id="event-app" data-event-id="{{ event_id }}">
+  <div class="loader"><div class="spinner"></div></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/event.js') }}"></script>
+{% endblock %}

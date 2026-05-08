@@ -1,0 +1,70 @@
+# ========== Secrets / 私密配置 ==========
+config.json
+config.local.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+
+# ========== Python ==========
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ========== IDE / Editor ==========
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# ========== OS ==========
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ========== Logs / Temp ==========
+*.log
+logs/
+*.tmp
+*.bak
+*.cache
+
+# ========== Local DB / state (precaution) ==========
+*.sqlite
+*.sqlite3
+*.db
+
+# ========== 调试时落盘的样本响应 ==========
+response.json
+resp.txt
+top.json
+stats.json
+lb.json
+proxy-resolve.json
+probe-*.json
+*.heapsnapshot
+trace.json
+trace.json.gz
+
+# ========== Build / dist ==========
+dist/
+build/
+*.egg
+node_modules/

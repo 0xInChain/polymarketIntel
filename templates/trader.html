@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Trader · {{ addr }}{% endblock %}
+{% block content %}
+<div id="trader-app" data-addr="{{ addr }}">
+  <div class="loader"><div class="spinner"></div></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/trader.js') }}"></script>
+{% endblock %}

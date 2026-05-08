@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Settings · Polymarket Intel{% endblock %}
+{% block content %}
+<div class="settings-wrap">
+  <h1 class="page-title" data-i18n="settings_title">Settings</h1>
+  <p class="page-subtitle" data-i18n="settings_desc">Only accessible from localhost. Token is stored only in local
+    config.json and never uploaded.</p>
+
+  <div class="card" style="padding: 24px; max-width: 720px; margin-top: 16px;">
+    <div id="settings-status" class="settings-status"></div>
+
+    <form id="settings-form" class="settings-form" autocomplete="off">
+      <div class="settings-row">
+        <label for="cfg-upstream" data-i18n="settings_upstream">Data API URL</label>
+        <input id="cfg-upstream" type="text" placeholder="https://api.example.com" />
+        <span class="form-hint" data-i18n="settings_upstream_hint">Example: https://api.example.com</span>
+      </div>
+
+      <div class="settings-row">
+        <label for="cfg-token" data-i18n="settings_token">Access token</label>
+        <div class="input-with-action">
+          <input id="cfg-token" type="password" placeholder="••••••••" />
+          <button type="button" id="cfg-token-toggle" class="btn btn-ghost" title="show/hide">
+            <i data-lucide="eye" width="16" height="16"></i>
+          </button>
+        </div>
+        <span class="form-hint" data-i18n="settings_token_hint">Access token attached to data API requests</span>
+      </div>
+
+      <div class="settings-row inline">
+        <label for="cfg-verify" class="checkbox-label">
+          <input id="cfg-verify" type="checkbox" />
+          <span data-i18n="settings_verify_tls">Verify data API TLS</span>
+        </label>
+      </div>
+
+      <div class="settings-row inline">
+        <label data-i18n="settings_lang">Default language</label>
+        <div id="cfg-lang" class="settings-lang-host"></div>
+      </div>
+
+      <div class="settings-actions">
+        <button type="submit" class="btn btn-primary" data-i18n="settings_save">Save</button>
+        <button type="button" id="cfg-test" class="btn" data-i18n="settings_test">Test connection</button>
+        <a href="/" class="btn btn-ghost" data-i18n="settings_back_home">Back to home</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

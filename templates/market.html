@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Market · {{ condition_id }}{% endblock %}
+{% block content %}
+<div id="market-app" data-condition-id="{{ condition_id }}">
+  <div class="loader"><div class="spinner"></div></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/market.js') }}"></script>
+{% endblock %}

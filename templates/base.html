@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="page_title">{% block title %}Polymarket Intel{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2300d49b'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-size='52' font-family='sans-serif' font-weight='800' fill='%230a0c12'%3EP%3C/text%3E%3C/svg%3E">
+  <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+</head>
+
+<body>
+  <nav class="app-nav">
+    <div class="app-nav-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">P</span>
+        <span>Polymarket Intel</span>
+      </a>
+      <div class="nav-right">
+        <form class="nav-search" id="nav-search-form" autocomplete="off">
+          <i class="nav-search-icon" data-lucide="search" width="16" height="16"></i>
+          <input id="nav-search-input" type="text" data-i18n-placeholder="search_placeholder"
+            placeholder="Search address / 0x... / conditionId" />
+        </form>
+        <div id="lang-toggle" class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" class="lang-opt" data-lang="zh">中文</button>
+          <button type="button" class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <a href="/settings" class="nav-settings" title="Settings">
+          <i data-lucide="settings" width="16" height="16"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="app-shell">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="app-shell" id="app-footer">
+    <span data-i18n="footer_brand">Polymarket Intel</span>
+    <span class="sep">·</span>
+    <a href="https://polymarket.com" target="_blank" rel="noopener">polymarket.com</a>
+    <span class="sep">·</span>
+    <a href="/settings" data-i18n="nav_settings">Settings</a>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+  <script>
+    (function () {
+      // 应用 i18n 到所有 data-i18n / data-i18n-placeholder 节点
+      function applyI18n() {
+        if (!window.i18n) return;
+        document.querySelectorAll('[data-i18n]').forEach((el) => {
+          const k = el.getAttribute('data-i18n');
+          const v = window.i18n.t(k);
+          if (v) el.textContent = v;
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+          const k = el.getAttribute('data-i18n-placeholder');
+          const v = window.i18n.t(k);
+          if (v) el.placeholder = v;
+        });
+        document.documentElement.lang = window.i18n.lang === 'zh' ? 'zh-CN' : 'en';
+      }
+      window.applyI18n = applyI18n;
+      applyI18n();
+
+      // 语言切换 (segmented control)
+      const langGroup = document.getElementById('lang-toggle');
+      function syncLang() {
+        langGroup.querySelectorAll('.lang-opt').forEach((b) => {
+          b.classList.toggle('active', b.dataset.lang === window.i18n.lang);
+        });
+      }
+      syncLang();
+      langGroup.querySelectorAll('.lang-opt').forEach((b) => {
+        b.addEventListener('click', () => {
+          if (window.i18n.lang === b.dataset.lang) return;
+          window.i18n.setLang(b.dataset.lang);
+          syncLang();
+          applyI18n();
+          document.dispatchEvent(new CustomEvent('langchange'));
+        });
+      });
+
+      // 顶部导航搜索
+      document.getElementById('nav-search-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const q = document.getElementById('nav-search-input').value.trim();
+        if (!q) return;
+        if (/^0x[0-9a-fA-F]{40}$/.test(q)) {
+          location.href = '/trader/' + q;
+        } else if (/^0x[0-9a-fA-F]{60,}$/.test(q)) {
+          location.href = '/market/' + q;
+        } else if (/^[0-9]+$/.test(q)) {
+          location.href = '/event/' + q;
+        } else {
+          showToast(window.i18n.t('search_invalid'), 'error');
+        }
+      });
+      if (window.lucide) lucide.createIcons();
+    })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>
