@@ -48,10 +48,10 @@ pip install -r requirements.txt
 python app.py
 
 # 3. open http://localhost:5000/settings
-#    paste your data API endpoint and access token, click Save
+#    paste your access token (data API endpoint is pre-filled), click Save
 ```
 
-The first launch creates an empty `config.json`. Open `/settings` (gear icon in the top-right of the nav bar) to fill in the data API endpoint and the access token. Configuration is persisted only inside the local `config.json` and **never leaves your machine**.
+The first launch creates a `config.json` with the data API endpoint pre-filled. Open `/settings` (gear icon in the top-right of the nav bar) to paste in your access token. Configuration is persisted only inside the local `config.json` and **never leaves your machine**.
 
 > The `/settings` page and `/api/config` endpoint refuse any request whose remote address is not `127.0.0.1` / `::1` / `localhost`. You can safely bind the server to `0.0.0.0` for LAN access without leaking credentials.
 
@@ -59,14 +59,16 @@ The first launch creates an empty `config.json`. Open `/settings` (gear icon in 
 
 ```jsonc
 {
-  "upstream":  "https://api.example.com",   // data API endpoint
-  "token":     "your_token",                 // data API access token
+  "upstream":  "https://0xrouter.app",      // data API endpoint (pre-filled)
+  "token":     "your_token",                 // data API access token (required)
   "host":      "127.0.0.1",                  // bind host
   "port":      5000,                          // bind port
   "verifyTls": false,                         // verify TLS cert of the data API
   "lang":      "zh"                           // default UI language: zh / en
 }
 ```
+
+The `upstream` field is pre-filled with the public endpoint, so for most users only `token` needs to be supplied via `/settings`.
 
 Optional environment variables (override `config.json` at startup, useful for Docker / CI):
 
@@ -157,10 +159,10 @@ pip install -r requirements.txt
 python app.py
 
 # 3. 浏览器打开 http://localhost:5000/settings
-#    填入数据 API 地址与访问令牌，点保存
+#    填入访问令牌 (数据 API 地址已预填)，点保存
 ```
 
-首次运行 `app.py` 会自动生成一份空的 `config.json`。打开 `/settings`（导航栏右上角齿轮图标）填入数据 API 地址与访问令牌即可。配置只保存在本机 `config.json`，**不会发送到任何外部位置**。
+首次运行 `app.py` 会自动生成一份 `config.json`，其中数据 API 地址已预填。打开 `/settings`（导航栏右上角齿轮图标）填入你的访问令牌即可。配置只保存在本机 `config.json`，**不会发送到任何外部位置**。
 
 > `/settings` 与 `/api/config` 只接受来自 `127.0.0.1` / `::1` / `localhost` 的请求。即便把服务监听在 `0.0.0.0` 供局域网访问，配置也不会被外部读到。
 
@@ -168,14 +170,16 @@ python app.py
 
 ```jsonc
 {
-  "upstream":  "https://api.example.com",   // 数据 API 地址
-  "token":     "your_token",                 // 数据 API 访问令牌
+  "upstream":  "https://0xrouter.app",      // 数据 API 地址 (已预填)
+  "token":     "your_token",                 // 数据 API 访问令牌 (必填)
   "host":      "127.0.0.1",                  // 监听地址
   "port":      5000,                          // 监听端口
   "verifyTls": false,                         // 是否校验数据 API 的 TLS 证书
   "lang":      "zh"                           // 默认 UI 语言: zh / en
 }
 ```
+
+`upstream` 已预填到默认数据 API 地址, 多数情况下打开 `/settings` 只需要填入 `token` 即可。
 
 环境变量（可选，启动时覆盖 `config.json`，方便 Docker / CI）：
 

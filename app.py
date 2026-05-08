@@ -23,7 +23,7 @@ CONFIG_PATH = ROOT / "config.json"
 CONFIG_EXAMPLE_PATH = ROOT / "config.example.json"
 
 DEFAULT_CONFIG: dict[str, Any] = {
-    "upstream": "",
+    "upstream": "https://0xrouter.app",
     "token": "",
     "host": "127.0.0.1",
     "port": 5000,
